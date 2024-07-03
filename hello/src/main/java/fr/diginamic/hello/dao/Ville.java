@@ -1,6 +1,7 @@
 package fr.diginamic.hello.dao;
 
 public class Ville {
+	protected Integer id;
 	protected String nom;
 	protected Integer nbHab;
 
@@ -8,6 +9,15 @@ public class Ville {
 		super();
 		this.nom = nom;
 		this.nbHab = nbHab;
+		
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNom() {
