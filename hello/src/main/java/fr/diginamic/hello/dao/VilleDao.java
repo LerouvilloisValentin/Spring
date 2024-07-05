@@ -39,7 +39,7 @@ public class VilleDao {
 		Ville ville = em.find(Ville.class, idVille);
 		if(ville != null) {
 			ville.setNom(villeUpdated.getNom());
-			ville.setNbHab(villeUpdated.getNbHab());
+			ville.setPopulation(villeUpdated.getPopulation());
 			em.merge(ville);
 		}
 		return extractVilles();

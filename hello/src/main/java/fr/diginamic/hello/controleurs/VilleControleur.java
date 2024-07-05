@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.diginamic.hello.entities.Ville;
@@ -64,30 +65,48 @@ public class VilleControleur {
 	}
 
 	@PutMapping("/updateVilles")
-	public ResponseEntity<String> updateVille(@Valid @RequestBody Ville updatedVille,
-			BindingResult controleQualite) {
+	public ResponseEntity<String> updateVille(@Valid @RequestBody Ville updatedVille, BindingResult controleQualite) {
 		if (controleQualite.hasErrors()) {
 			return ResponseEntity.badRequest().body(
 					"l'id modifié n'est pas un entier positif ou le nom modifié ne contient pas au minimuum 3 caractères");
 		}
-			int idVille = updatedVille.getId();
-			villeService.updateVille(idVille, updatedVille);
+		int idVille = updatedVille.getId();
+		villeService.updateVille(idVille, updatedVille);
 
-			return ResponseEntity.ok("Ville mise à jour avec succès");
-
+		return ResponseEntity.ok("Ville mise à jour avec succès");
 
 //		return ResponseEntity.badRequest().body("Ville non trouvé");
 	}
 
 	@DeleteMapping("/deleteVille/{id}")
 	public ResponseEntity<String> deleteVille(@PathVariable int id) {
-	
-		villeService.deleteVille(id);
-				return ResponseEntity.ok("Ville supprimée avec succès");
-			}
-		
-//		return ResponseEntity.badRequest().body("Ville non trouvée");
+		Ville ville = villeService.extractVille(id);
+		if (ville != null) {
+			villeService.deleteVille(id);
+			return ResponseEntity.ok("Ville supprimée avec succès");
+		} else {
+			return ResponseEntity.badRequest().body("Ville introuvable");
+		}
 	}
 
+	/**
+	 * méthode avec le CrudRepository
+	 */
 
+	@GetMapping("/search")
+	public List<Ville> getVilleByFirstCaract(@RequestParam String nom) {
+		return villeService.findByNomStartingWith(nom);
+	}
+	
+	@GetMapping("/searchbypop")
+	public List<Ville> getVilleByPopSup(@RequestParam int min) {
+		return villeService.popSuperieurA(min);
+	}
+	
+	@GetMapping("/searchbypopslice")
+	public List<Ville> getVilleByPopSlice(@RequestParam int min, int max) {
+		return villeService.popEntreMinMax(min, max);
+	}
+	
 
+}

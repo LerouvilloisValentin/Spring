@@ -26,8 +26,8 @@ public class Ville {
 	protected String nom;
 
 	@Min(1)
-	@Column(name = "NB_HAB")
-	protected Integer nbHab;
+	@Column(name = "POPULATION")
+	protected Integer population;
 
 	@ManyToOne
 	@JoinColumn(name = "DEPARTEMENT")
@@ -36,11 +36,27 @@ public class Ville {
 	public Ville() {
 	}
 
-	public Ville(String nom, Integer nbHab) {
+	public Ville(String nom, Integer population) {
 		super();
 		this.nom = nom;
-		this.nbHab = nbHab;
+		this.population = population;
 
+	}
+
+	public Integer getPopulation() {
+		return population;
+	}
+
+	public Departement getDepartement() {
+		return departement;
+	}
+
+	public void setPopulation(Integer population) {
+		this.population = population;
+	}
+
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
 	}
 
 	public Integer getId() {
@@ -55,16 +71,12 @@ public class Ville {
 		return nom;
 	}
 
-	public Integer getNbHab() {
-		return nbHab;
-	}
+
 
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
-	public void setNbHab(Integer nbHab) {
-		this.nbHab = nbHab;
-	}
+
 
 }

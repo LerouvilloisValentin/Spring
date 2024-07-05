@@ -18,6 +18,8 @@ public class Departement {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_VILLE")
 	private Integer id;
+	@Column(name = "CODE_DEPARTEMENT")
+	private String codeDepartement;
 	@Column(name = "NOM")
 	private String nom;
 	@OneToMany(mappedBy = "departement")
@@ -27,11 +29,24 @@ public class Departement {
 		super();
 	}
 
-	public Departement(Integer id, String nom, Set<Ville> villes) {
+	public Departement(Integer id, String codeDepartement) {
 		super();
 		this.id = id;
-		this.nom = nom;
+		this.codeDepartement = codeDepartement;
+	}
+
+	public Departement(Integer id,  Set<Ville> villes) {
+		super();
+		this.id = id;
 		this.villes = villes;
+	}
+
+	public String getCodeDepartement() {
+		return codeDepartement;
+	}
+
+	public void setCodeDepartement(String codeDepartement) {
+		this.codeDepartement = codeDepartement;
 	}
 
 	public Integer getId() {
