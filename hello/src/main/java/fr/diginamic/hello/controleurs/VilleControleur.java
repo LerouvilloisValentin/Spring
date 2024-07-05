@@ -64,7 +64,7 @@ public class VilleControleur {
 	}
 
 	@PutMapping("/updateVilles")
-	public ResponseEntity<String> updateVille(@Valid @RequestBody  Ville updatedVille,
+	public ResponseEntity<String> updateVille(@Valid @RequestBody Ville updatedVille,
 			BindingResult controleQualite) {
 		if (controleQualite.hasErrors()) {
 			return ResponseEntity.badRequest().body(
@@ -81,13 +81,13 @@ public class VilleControleur {
 
 	@DeleteMapping("/deleteVille/{id}")
 	public ResponseEntity<String> deleteVille(@PathVariable int id) {
-		for (int i = 0; i < villes.size(); i++) {
-			if (villes.get(i).getId() == id) {
-				villes.remove(i);
+	
+		villeService.deleteVille(id);
 				return ResponseEntity.ok("Ville supprimée avec succès");
 			}
-		}
-		return ResponseEntity.badRequest().body("Ville non trouvée");
+		
+//		return ResponseEntity.badRequest().body("Ville non trouvée");
 	}
 
-}
+
+

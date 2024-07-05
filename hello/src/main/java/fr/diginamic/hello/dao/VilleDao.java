@@ -1,10 +1,7 @@
 package fr.diginamic.hello.dao;
 
 import java.util.List;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-
 import fr.diginamic.hello.entities.Ville;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -44,6 +41,15 @@ public class VilleDao {
 			ville.setNom(villeUpdated.getNom());
 			ville.setNbHab(villeUpdated.getNbHab());
 			em.merge(ville);
+		}
+		return extractVilles();
+	}
+	
+	@Transactional
+	public List<Ville> deleteVille(int idVille){
+		Ville ville = em.find(Ville.class, idVille);
+		if(ville !=null) {
+			em.remove(ville);
 		}
 		return extractVilles();
 	}

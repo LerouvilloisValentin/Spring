@@ -32,4 +32,8 @@ public class VilleService {
 	public List<Ville>updateVille(int idVille, Ville villeUpdated){
 		return villeDao.updateVille(idVille, villeUpdated);
 	}
+	
+	public List<Ville> deleteVille(int idVille){
+		return villeDao.deleteVille(idVille);
+	}
 }
