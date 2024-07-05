@@ -1,12 +1,14 @@
 package fr.diginamic.hello.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,19 +20,18 @@ public class Departement {
 	private Integer id;
 	@Column(name = "NOM")
 	private String nom;
-	@ManyToOne
-	@JoinColumn(name = "VILLE")
-	private Ville ville;
+	@OneToMany(mappedBy = "departement")
+	private Set<Ville> villes= new HashSet<>();
 
 	public Departement() {
 		super();
 	}
 
-	public Departement(Integer id, String nom, Ville ville) {
+	public Departement(Integer id, String nom, Set<Ville> villes) {
 		super();
 		this.id = id;
 		this.nom = nom;
-		this.ville = ville;
+		this.villes = villes;
 	}
 
 	public Integer getId() {
@@ -41,8 +42,8 @@ public class Departement {
 		return nom;
 	}
 
-	public Ville getVille() {
-		return ville;
+	public Set<Ville> getVilles() {
+		return villes;
 	}
 
 	public void setId(Integer id) {
@@ -53,8 +54,11 @@ public class Departement {
 		this.nom = nom;
 	}
 
-	public void setVille(Ville ville) {
-		this.ville = ville;
+	public void setVilles(Set<Ville> villes) {
+		this.villes = villes;
 	}
 
+
+
+	
 }
