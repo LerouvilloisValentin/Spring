@@ -35,12 +35,19 @@ public class Departement {
 		this.codeDepartement = codeDepartement;
 	}
 
-	public Departement(Integer id,  Set<Ville> villes) {
+	public Departement(Integer id,String nom,  Set<Ville> villes) {
 		super();
 		this.id = id;
+		this.nom = nom;
 		this.villes = villes;
 	}
 
+
+    public void addVille(Ville ville) {
+        this.villes.add(ville);
+        ville.setDepartement(this);
+    }
+    
 	public String getCodeDepartement() {
 		return codeDepartement;
 	}

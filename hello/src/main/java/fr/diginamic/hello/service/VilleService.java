@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import fr.diginamic.hello.dao.VilleDao;
 import fr.diginamic.hello.entities.Ville;
+import jakarta.transaction.Transactional;
 
 @Service
 public class VilleService {
@@ -35,7 +36,7 @@ public class VilleService {
 	public Ville extractVille(int idVille) {
 		return villeRepository.findById(idVille).orElse(null);
 	}
-	
+	@Transactional
 	public Ville insertVille(Ville ville) {
 		return villeRepository.save(ville);
 	}

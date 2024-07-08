@@ -20,17 +20,14 @@ public class Ville {
 	@Column(name = "ID_VILLE")
 	protected Integer id;
 
-	@NotNull
-	@Size(min = 3)
 	@Column(name = "NOM")
 	protected String nom;
 
-	@Min(1)
 	@Column(name = "POPULATION")
 	protected Integer population;
 
 	@ManyToOne
-	@JoinColumn(name = "DEPARTEMENT")
+	@JoinColumn(name = "ID_DEPARTEMENT")
 	private Departement departement;
 	
 	public Ville() {
