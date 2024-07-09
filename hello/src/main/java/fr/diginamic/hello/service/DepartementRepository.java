@@ -7,7 +7,7 @@ import fr.diginamic.hello.entities.Departement;
 
 public interface DepartementRepository extends CrudRepository<Departement, Integer> {
 
-	List<Departement> findByCodeDepartement(String codeDepartement);
+	Departement findByCodeDepartement(String codeDepartement);
 	List<Departement> findBy();
 	
 	

@@ -28,7 +28,6 @@ public class Ville {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_DEPARTEMENT")
-
 	private Departement departement;
 	
 	public Ville() {

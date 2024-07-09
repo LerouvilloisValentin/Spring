@@ -31,8 +31,12 @@ public class DepartementService {
 	@Transactional
     public DepartementDto insertDepartements(DepartementDto departementDto) {
 		Departement departement = dtoService.convertToDepartementEntity(departementDto);
-        Departement saveDepartement = departementRepository.save(departement);
-        return dtoService.convertToDepartementDTO(saveDepartement);
+		Departement deptBdd = departementRepository.findByCodeDepartement(departement.getCodeDepartement());
+		if(deptBdd==null) {
+			Departement saveDepartement = departementRepository.save(departement);
+			return dtoService.convertToDepartementDTO(saveDepartement);
+		}
+		return dtoService.convertToDepartementDTO(deptBdd);
     }
 	
 	/*

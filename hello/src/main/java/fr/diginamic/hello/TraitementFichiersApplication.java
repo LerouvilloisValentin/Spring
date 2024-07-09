@@ -1,4 +1,4 @@
-package fr.diginamic.hello.controleurs;
+package fr.diginamic.hello;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,14 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import fr.diginamic.hello.dto.DepartementDto;
 import fr.diginamic.hello.dto.VilleDto;
 import fr.diginamic.hello.entities.Departement;
 import fr.diginamic.hello.entities.Ville;
 import fr.diginamic.hello.service.DTOService;
 import fr.diginamic.hello.service.DepartementRepository;
-import fr.diginamic.hello.service.DepartementService;
 import fr.diginamic.hello.service.VilleService;
 import jakarta.transaction.Transactional;
 
@@ -24,8 +21,6 @@ import jakarta.transaction.Transactional;
 public class TraitementFichiersApplication implements CommandLineRunner {
 	@Autowired
 	private VilleService villeService;
-	@Autowired
-	private DepartementService departementService;
 	@Autowired
 	private DepartementRepository departementRepository;
 	@Autowired
@@ -41,7 +36,7 @@ public class TraitementFichiersApplication implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
-		if(!initialisationBase) {
+		if (!initialisationBase) {
 			System.out.println("La base est déjà initialisé");
 			return;
 		}
@@ -63,20 +58,18 @@ public class TraitementFichiersApplication implements CommandLineRunner {
 			ville.setNom(name);
 			ville.setPopulation(population);
 			departement.setCodeDepartement(dpt);
-				departement.addVille(ville);
 
-			// Insérer ou mettre à jour le département
-			DepartementDto departementDto = dtoService.convertToDepartementDTO(departement);
-			/*
-			 * la métohde récupère en paramètre une Departement et l'insère en bdd
-			 */
-			departementService.insertDepartements(departementDto);
-
+			Departement deptBdd = departementRepository.findByCodeDepartement(departement.getCodeDepartement());
+			if (deptBdd == null) {
+				deptBdd = departementRepository.save(departement);
+			} else {
+				ville.setDepartement(deptBdd);
+			}
 			VilleDto villeDto = dtoService.convertToVilleDTO(ville);
-
-			// Insérer la ville en utilisant le DTO
+			/*
+			 * Insérer la ville en utilisant le DTO
+			 */
 			villeService.insertVille(villeDto);
-
 
 		}
 	}
