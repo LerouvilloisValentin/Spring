@@ -11,6 +11,8 @@ import fr.diginamic.hello.entities.Ville;
 public interface VilleRepository extends CrudRepository<Ville,Integer> {
 
 	List<Ville> findByNomStartingWith(String nom);
+	
+	List<Ville> findByNom(String nom);
 
 	List<Ville> findByPopulationGreaterThan(int min);
 	

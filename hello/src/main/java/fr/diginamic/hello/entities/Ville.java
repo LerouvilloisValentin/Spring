@@ -1,5 +1,7 @@
 package fr.diginamic.hello.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,9 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "VILLE")
@@ -28,6 +28,7 @@ public class Ville {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_DEPARTEMENT")
+
 	private Departement departement;
 	
 	public Ville() {
