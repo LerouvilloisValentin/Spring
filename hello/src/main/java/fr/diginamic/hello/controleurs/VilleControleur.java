@@ -6,10 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import fr.diginamic.hello.dto.VilleDto;
 import fr.diginamic.hello.service.VilleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 @RestController
@@ -20,6 +33,14 @@ public class VilleControleur {
     @Autowired
     private VilleService villeService;
 
+    @Operation(summary = "Renvoie la liste de ville entière")
+	@ApiResponses(value = {
+	  @ApiResponse(responseCode = "200",
+			       description = "Retourne la ville les villes et leurs populations",
+			       content = { @Content(mediaType = "application/json",
+			       schema = @Schema(implementation = VilleDto.class)) }),
+	  @ApiResponse(responseCode = "400", description = "Si l'url n'est pas bon",
+	    			content = @Content)})
     @GetMapping
     public List<VilleDto> getVille() {
         return villeService.getVilles();
@@ -29,7 +50,17 @@ public class VilleControleur {
     public VilleDto getVilleById(@PathVariable int id) {
         return villeService.getVille(id);
     }
-
+    /*
+     * Get /nom/(nom de la ville) permet de rechercher par le nom de la ville
+     */
+    @Operation(summary = "Recherche d'une ville par le nom")
+	@ApiResponses(value = {
+	  @ApiResponse(responseCode = "200",
+			       description = "Retourne la ville indiquer dans l'url et sa population",
+			       content = { @Content(mediaType = "application/json",
+			       schema = @Schema(implementation = VilleDto.class)) }),
+	  @ApiResponse(responseCode = "400", description = "Si le nom renseigné n'existe pas",
+	    			content = @Content)})
     @GetMapping("/nom/{nom}")
     public ResponseEntity<?> getVilleByName(@PathVariable String nom) {
         List<VilleDto> ville = villeService.extractVilleByName(nom);
@@ -51,6 +82,7 @@ public class VilleControleur {
                 return ResponseEntity.badRequest().body("La ville existe déjà");
             }
         }
+
         villeService.insertVille(nvVille);
         return ResponseEntity.ok("Ville insérée avec succès");
     }
