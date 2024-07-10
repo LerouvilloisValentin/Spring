@@ -72,11 +72,11 @@ public class VilleService {
                 .collect(Collectors.toList());
     }
 
-    public List<VilleDto> popSuperieurA(int min) {
-        return villeRepository.findByPopulationGreaterThan(min).stream()
-                .map(dtoService::convertToVilleDTO)
-                .collect(Collectors.toList());
-    }
+//    public List<VilleDto> popSuperieurA(int min) {
+//        return villeRepository.findByPopulationGreaterThan(min).stream()
+//                .map(dtoService::convertToVilleDTO)
+//                .collect(Collectors.toList());
+//    }
 
     public List<VilleDto> popEntreMinMax(int min, int max) {
         return villeRepository.findByPopulationBetween(min, max).stream()

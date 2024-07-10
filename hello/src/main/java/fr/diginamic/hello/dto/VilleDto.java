@@ -1,11 +1,40 @@
 package fr.diginamic.hello.dto;
 
-public class VilleDto {
-    private Integer id;
-    private String nom;
-    private int population;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-    // Getters et Setters
+public class VilleDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+	private String nom;
+	private Integer population;
+	private String codeDepartement;
+	private String nomDepartement;
+
+	
+    public void setPopulation(Integer population) {
+		this.population = population;
+	}
+
+	public String getCodeDepartement() {
+		return codeDepartement;
+	}
+
+	public String getNomDepartement() {
+		return nomDepartement;
+	}
+
+	public void setCodeDepartement(String codeDepartement) {
+		this.codeDepartement = codeDepartement;
+	}
+
+	public void setNomDepartement(String nomDepartement) {
+		this.nomDepartement = nomDepartement;
+	}
+
+	// Getters et Setters
     public Integer getId() {
         return id;
     }

@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import fr.diginamic.hello.dto.DepartementDto;
 import fr.diginamic.hello.entities.Departement;
+import fr.diginamic.hello.entities.Ville;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -56,7 +58,12 @@ public class DepartementService {
 		  List<Departement> savedDepartements = (List<Departement>) departementRepository.saveAll(departementList);
 	        return savedDepartements.stream()
 	                .map(dtoService::convertToDepartementDTO)
-	                .collect(Collectors.toList());
-		
+	                .collect(Collectors.toList());	
+	}
+	
+	public  Departement handleNomDepartement(String codeDepartement) {
+		RestTemplate restTemplate = new RestTemplate();
+		String url = "https://geo.api.gouv.fr/departements/"+codeDepartement+"?fields=nom,code,codeRegion";
+		 return restTemplate.getForObject(url, Departement.class);
 	}
 }
