@@ -63,7 +63,7 @@ public class VilleControleur {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = VilleDto.class)) }),
 			@ApiResponse(responseCode = "400", description = "Si l'url n'est pas bon", content = @Content) })
 	@GetMapping
-	public List<VilleDto> getVille() {
+	public List<Ville> getVille() {
 		return villeService.getVilles();
 	}
 
@@ -90,14 +90,14 @@ public class VilleControleur {
 	}
 
 	@PostMapping("/addVilles")
-	public ResponseEntity<String> addVille(@Valid @RequestBody VilleDto nvVille, BindingResult controleQualite) {
+	public ResponseEntity<String> addVille(@Valid @RequestBody Ville nvVille, BindingResult controleQualite) {
 		if (controleQualite.hasErrors()) {
 			return ResponseEntity.badRequest()
 					.body("L'id n'est pas un entier positif ou le nom ne contient pas au minimum 3 caractères");
 		}
 
-		List<VilleDto> villes = villeService.getVilles();
-		for (VilleDto ville : villes) {
+		List<Ville> villes = villeService.getVilles();
+		for (Ville ville : villes) {
 			if (ville.getNom().equals(nvVille.getNom())) {
 				return ResponseEntity.badRequest().body("La ville existe déjà");
 			}

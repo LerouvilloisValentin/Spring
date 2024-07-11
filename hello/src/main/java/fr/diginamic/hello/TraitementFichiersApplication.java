@@ -57,19 +57,19 @@ public class TraitementFichiersApplication implements CommandLineRunner {
 			Departement departement = new Departement();
 			ville.setNom(name);
 			ville.setPopulation(population);
-			departement.setCodeDepartement(dpt);
-
-			Departement deptBdd = departementRepository.findByCodeDepartement(departement.getCodeDepartement());
-			if (deptBdd == null) {
-				deptBdd = departementRepository.save(departement);
-			} else {
-				ville.setDepartement(deptBdd);
-			}
-			VilleDto villeDto = dtoService.convertToVilleDTO(ville);
+			villeService.insertVille(ville);
+//			departement.setCodeDepartement(dpt);
+//
+//			Departement deptBdd = departementRepository.findByCodeDepartement(departement.getCodeDepartement());
+//			if (deptBdd == null) {
+//				deptBdd = departementRepository.save(departement);
+//			} else {
+//				ville.setDepartement(deptBdd);
+//			}
+//			VilleDto villeDto = dtoService.convertToVilleDTO(ville);
 			/*
 			 * Insérer la ville en utilisant le DTO
 			 */
-			villeService.insertVille(villeDto);
 
 		}
 	}

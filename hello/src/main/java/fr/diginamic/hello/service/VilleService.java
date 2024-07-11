@@ -13,19 +13,14 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class VilleService {
-
     @Autowired
     private VilleDao villeDao;
-
     @Autowired
     private VilleRepository villeRepository;
-
     @Autowired
     private DTOService dtoService;
-
-    
     /**
-     * Couche avec le Dao
+     * Couche avec le Dto
      * @param nom
      * @return
      */
@@ -58,19 +53,18 @@ public class VilleService {
         Ville ville = villeRepository.findById(idVille).orElse(null);
         return dtoService.convertToVilleDTO(ville);
     }
+    public List<Ville> getVilles() {
+    	return (List<Ville>) villeRepository.findAll();
+    	
+    }
 
     @Transactional
-    public VilleDto insertVille(VilleDto villeDto) {
-        Ville ville = dtoService.convertToVilleEntity(villeDto);
-        Ville savedVille = villeRepository.save(ville);
-        return dtoService.convertToVilleDTO(savedVille);
+    public Ville insertVille(Ville ville) {
+//        Ville ville = dtoService.convertToVilleEntity(villeDto);
+       return villeRepository.save(ville);
+//        return dtoService.convertToVilleDTO(savedVille);
     }
 
-    public List<VilleDto> getVilles() {
-        return ((List<Ville>) villeRepository.findAll()).stream()
-                .map(dtoService::convertToVilleDTO)
-                .collect(Collectors.toList());
-    }
 
 //    public List<VilleDto> popSuperieurA(int min) {
 //        return villeRepository.findByPopulationGreaterThan(min).stream()
